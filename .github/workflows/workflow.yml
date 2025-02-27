@@ -1,13 +1,11 @@
-  workflow "Jenkins single-shot master" {
-    on = "push"
-    resolves = ["jenkinsfile-runner-prepackaged"]
-  }
-    
-    action "jenkinsfile-runner-prepackaged" {
-    uses = "jenkinsci/jenkinsfile-runner-github-actions@v0.2"
-    secrets = ["GITHUB_TOKEN"]
-  }
-
-
-
-
+on: push
+name: Jenkins single-shot master
+jobs:
+  jenkinsfile-runner-prepackaged:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Jenkinsfile Runner Prepackaged
+        uses: jenkinsci/jenkinsfile-runner-github-actions@v0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
